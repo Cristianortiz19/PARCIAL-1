@@ -2,6 +2,7 @@ const { response } = require('express');
 const express = require('express');
 const { Server } = require('socket.io');
 const PORT = 5050;
+let scoreActual = 0;
 
 const app = express();
 const httpServer = app.listen(PORT, () => {
@@ -26,7 +27,7 @@ app.use(express.json());
 1) Create an endpoint to GET a validation message to test if the endpoint is working
 _____________________________________________ */
 
-app.get(httpServer, (req, res) => {
+app.get('/working', (req, res) => {
     res.send({message: 'ola mundo, estoy funcionando!'})
 });
 
@@ -38,9 +39,8 @@ _____________________________________________ */
 
 ioServer.on('connection', (socket) => {
     console.log(socket.id);
-    ioServer.on('controller-data', data => {
-        console.log({data});
-        socket.broadcast.emit('display-data', data);
+    ioServer.on('controller-direction', direction => {
+        socket.broadcast.emit('display-direction', direction);
     })
 });
 
@@ -49,6 +49,9 @@ ioServer.on('connection', (socket) => {
 3) Create an endpoint to POST user score and print it
 _____________________________________________ */
 
-app.post('http://localhost:5050/display/score', (res, req) =>{
-    console.lo(req)
+app.post('/score', (res, req) =>{
+    const { score } = req,body;
+    scoreActual = score;
+    consol.log('Score: '+scoreActual)
+    res.send({message: 'Score: ' + scoreActual});
 })
