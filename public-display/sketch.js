@@ -28,25 +28,6 @@ function draw() {
     textSize(24);
     text('🐁', whiteMouse.x, whiteMouse.y);
     eatsMouse();
-    if(direction != null){
-        switch (direction) {
-            case 'UP':
-                character.y -=50;
-                break;
-            case 'DOWN':
-                character.y +=50;
-                break;
-            case 'RIGHT':
-                character.y +=50;
-                break;
-            case 'LEFT':
-                character.y -=50;
-                break;
-        
-            default:
-                break;
-        }
-    }
 }
 
 
@@ -71,7 +52,23 @@ _____________________________________________ */
 socket.on('display-data', data => {
     let { controllerDirections } = data;
     direction = controllerDirections;
-    console.log(data);
+    switch (direction) {
+            case 'UP':
+                character.y -=50;
+                break;
+            case 'DOWN':
+                character.y +=50;
+                break;
+            case 'RIGHT':
+                character.y +=50;
+                break;
+            case 'LEFT':
+                character.y -=50;
+                break;
+        
+            default:
+                break;
+        }
 })
 
 /*___________________________________________
@@ -79,7 +76,7 @@ socket.on('display-data', data => {
 2) Include the fetch method to post each time the snake eats a mouse
 _____________________________________________ */
 
-fetch(URL+'/Score', {
+fetch('/score', {
     methot: 'POST',
     body: score
 })
