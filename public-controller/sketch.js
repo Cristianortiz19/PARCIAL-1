@@ -40,10 +40,13 @@ function mousePressed() {
         directions = 'LEFT';
         console.log(directions);
     }
+    movement();
 }
 
 /*___________________________________________
 
 1) Create a function that includes the socket method to emit the directions
 _____________________________________________ */
-socket.emit('controller-data', {directions});
+function movement(){
+    socket.emit('controller-direction', directions);
+}
