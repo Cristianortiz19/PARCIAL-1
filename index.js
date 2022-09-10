@@ -39,7 +39,7 @@ _____________________________________________ */
 
 ioServer.on('connection', (socket) => {
     console.log(socket.id);
-    ioServer.on('controller-direction', direction => {
+    socket.on('controller-direction', direction => {
         socket.broadcast.emit('display-direction', direction);
     })
 });
